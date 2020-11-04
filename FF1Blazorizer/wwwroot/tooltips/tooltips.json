@@ -1214,5 +1214,10 @@
 		"title": "Lich's Revenge - Halloween Special 2020",
 		"screenshot": "LichRevenge.png",
 		"description": "Lich is having its revenge and a zombie apocalypse is upon the world!\n-All NPCs are zombies\n-Key NPCs will attack you when giving their item\n-Buffed undead enemies\n-End boss Lich"
+	},
+	{
+		"Id": "magicAutohitThresholdDropDown",
+		"title": "Power Word HP Limit",
+		"description": "Changes the threshold at which BLND, STUN, and XXXX are effective.\nThe value will always be a multiple of 300, or unlimited."
 	}
 ]
