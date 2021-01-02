@@ -21,6 +21,9 @@
 				<CheckBox UpdateToolTip="@UpdateToolTipID" Id="rememberCheckBox" @bind-Value="RememberROM">Remember ROM</CheckBox>
 				<CheckBox UpdateToolTip="@UpdateToolTipID" Id="tournamentSafeCheckBox" @bind-Value="Flags.TournamentSafe">Tournament Safe ROM</CheckBox>
 				<CheckBox UpdateToolTip="@UpdateToolTipID" Id="spoilersCheckBox" @bind-Value="Flags.Spoilers">Generate Spoiler Log!</CheckBox>
+				<button type="button" class="nes-btn is-primary" @onclick="@(() => Flags.BlindSeed = true)">Blind Seed</button>
+				<button type="button" class="nes-btn is-primary" @onclick="@(() => LoadStandardPreset("default"))">Reset</button>
+				<input hidden type="text" id="presetNameInput" />
 			</div>
 		</div>
 		<div class="row">&nbsp;</div>
@@ -285,5 +288,20 @@
 			SetStatusMessage(StatusMessage + "FAILURE: " + e.Message);
 			StateHasChanged();
 		}
+	}
+
+	async Task LoadStandardPreset(string name)
+	{
+		var json = await JSRuntime.InvokeAsync<string>("computePreset", "default");
+		Flags.BlindSeed = false;
+		LoadFromJson(json);
+	}
+
+	public void LoadFromJson(string json)
+	{
+		Flags.Preset preset = System.Text.Json.JsonSerializer.Deserialize<Flags.Preset>(json);
+		Flags.Flags = preset.Flags;
+		SetStatusMessage.Invoke(preset.Name + " preset successfully loaded.");
+		StateHasChanged();
 	}
 }

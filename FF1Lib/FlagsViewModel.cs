@@ -1502,6 +1502,15 @@ namespace FF1Lib
 			}
 		}
 
+		public bool BlindSeed
+		{
+			get => Flags.BlindSeed;
+			set
+			{
+				Flags.BlindSeed = value;
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("BlindSeed"));
+			}
+		}
 		public bool FreeOrbsEnabled => !ShardHunt;
 
 		public bool StartingGold

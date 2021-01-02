@@ -14,6 +14,7 @@ namespace FF1Lib
 	public class Flags : IIncentiveFlags, IMapEditFlags, IScaleFlags, IFloorShuffleFlags
 	{
 		public bool Spoilers { get; set; } = false;
+		public bool BlindSeed { get; set; } = false;
 		public bool TournamentSafe { get; set; } = false;
 		public bool? Shops { get; set; } = false;
 		public bool? Treasures { get; set; } = false;
@@ -591,6 +592,7 @@ namespace FF1Lib
 			sum = AddString(sum, 7, (FFRVersion.Sha.Length >= 7) ? FFRVersion.Sha.Substring(0,7) : FFRVersion.Sha.PadRight(7, 'X'));
 
 
+			sum = AddBoolean(sum, flags.BlindSeed);
 			sum = AddNumeric(sum, Enum.GetValues(typeof(EvadeCapValues)).Cast<int>().Max() + 1, (int)flags.EvadeCap);
 			sum = AddTriState(sum, flags.IncentivizeKatana);
 			sum = AddTriState(sum, flags.IncentivizeVorpal);
@@ -1199,7 +1201,8 @@ namespace FF1Lib
 				IncentivizeVorpal = GetTriState(ref sum),
 				IncentivizeKatana = GetTriState(ref sum),
 				EvadeCap = (EvadeCapValues)GetNumeric(ref sum, Enum.GetValues(typeof(EvadeCapValues)).Cast<int>().Max() + 1),
-			};
+				BlindSeed = GetBoolean(ref sum),
+		};
 			string EncodedSha = GetString(ref sum, 7);
 			if (((FFRVersion.Sha.Length >= 7) ? FFRVersion.Sha.Substring(0, 7) : FFRVersion.Sha.PadRight(7, 'X')) != EncodedSha)
 			{

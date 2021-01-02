@@ -1873,7 +1873,6 @@ namespace FF1Lib
 				"I. AM. LICH."
 			});
 
-			Console.WriteLine(intro.Length);
 			System.Diagnostics.Debug.Assert(intro.Length <= 208);
 			Put(0x37F20, intro);
 
