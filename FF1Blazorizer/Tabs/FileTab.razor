@@ -206,6 +206,9 @@
 		{
 			Flags.Flags = FF1Lib.Flags.DecodeFlagsText(flags);
 			SetStatusMessage("Successfully imported Flags.");
+
+			if (Flags.BlindSeed)
+				SetStatusMessage("Successfully imported Flags. This is a mystery seed; flags have been hidden.");
 		}
 		catch (Exception)
 		{
