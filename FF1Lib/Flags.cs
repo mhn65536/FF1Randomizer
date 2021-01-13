@@ -235,8 +235,9 @@ namespace FF1Lib
 
 		[DoubleFlag(0, 45)]
 		public double DungeonEncounterRate { get; set; } = 0;
-
 		public ProgressiveScaleMode ProgressiveScaleMode { get; set; } = ProgressiveScaleMode.Disabled;
+
+		public StartingItemSet StartingItemSet { get; set; } = StartingItemSet.None;
 
 		public bool? FIGHTER1 { get; set; } = false;
 		public bool? THIEF1 { get; set; } = false;
@@ -362,6 +363,7 @@ namespace FF1Lib
 		public bool? IncludeBaseClasses { get; set; } = false;
 		public bool? RandomPromotionsSpoilers { get; set; } = false;
 		public bool? RandomizeClass { get; set; } = false;
+		public bool? RandomizeClassNoCasting { get; set; } = false;
 		public bool? RandomizeClassChaos { get; set; } = false;
 
 		[IntegerFlag(0, 4)]
@@ -731,6 +733,8 @@ namespace FF1Lib
 			return flags;
 		}
 
+		private static BigInteger AddEnum<T>(BigInteger sum, T value) => AddNumeric(sum, Enum.GetValues(typeof(T)).Cast<int>().Max() + 1, Convert.ToInt32(value));
+
 		private static BigInteger AddNumeric(BigInteger sum, int radix, int value) => sum * radix + value;
 		private static BigInteger AddString(BigInteger sum, int length, string str)
 		{
@@ -745,6 +749,8 @@ namespace FF1Lib
 		private static BigInteger AddBoolean(BigInteger sum, bool value) => AddNumeric(sum, 2, value ? 1 : 0);
 		private static int TriStateValue(bool? value) => value.HasValue ? (value.Value ? 1 : 0) : 2;
 		private static BigInteger AddTriState(BigInteger sum, bool? value) => AddNumeric(sum, 3, TriStateValue(value));
+
+		private static T GetEnum<T>(ref BigInteger sum) where T : Enum => (T)(object)GetNumeric(ref sum, Enum.GetValues(typeof(T)).Cast<int>().Max() + 1);
 
 		private static int GetNumeric(ref BigInteger sum, int radix)
 		{
